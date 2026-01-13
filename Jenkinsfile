@@ -1,11 +1,16 @@
-Jenkinsfile (Declarative Pipeline)
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'maven:3.9.12-eclipse-temurin-21-alpine' } }
+    agent any // Używa Javy zainstalowanej bezpośrednio w Twoim systemie/WSL
     stages {
-        stage('build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn --version'
+                checkout scm // Pobiera kod z repozytorium
+            }
+        }
+        stage('Build & Run Java') {
+            steps {
+                // Kompilujemy i uruchamiamy bezpośrednio poleceniami shell
+                sh 'javac Hello.java'
+                sh 'java Hello'
             }
         }
     }
