@@ -1,16 +1,9 @@
 pipeline {
-    agent any // Używa Javy zainstalowanej bezpośrednio w Twoim systemie/WSL
+    agent { docker { image 'maven:3.9.12-eclipse-temurin-21-alpine' } }
     stages {
-        stage('Checkout') {
+        stage('build') {
             steps {
-                checkout scm // Pobiera kod z repozytorium
-            }
-        }
-        stage('Build & Run Java') {
-            steps {
-                // Kompilujemy i uruchamiamy bezpośrednio poleceniami shell
-                sh 'javac Hello.java'
-                sh 'java Hello'
+                sh 'mvn --version'
             }
         }
     }
